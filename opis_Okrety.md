@@ -1,3 +1,5 @@
+Jacek Oleksy 134138 GL05
+Link do repozytorium: https://github.com/jacekoleksy/battleships.python
 14. Okręty (https://131.wikiDedia.org/wiki/Okr%C4%99ty) 
 Opis zadania 
 	o Okno z dwoma planszami 10x10 pól (np. siatki przycisków) oraz przyciskiem rozpoczęcia gry i przyciskiem reset. 
