@@ -23,6 +23,7 @@ class Application(tk.Frame):
 
         self.frame_player2_text = tk.Frame(self, bg="pink", width=400, height=100)
         self.frame_player2_text.grid(row=0, column=2)
+        self.frame_player2_text.columnconfigure(0, weight=1)
 
         self.frame_ships = tk.Frame(self, bg="yellow", width=200, height=400, padx=50, pady=50)
         self.frame_ships.grid(row=1, column=0)
@@ -51,15 +52,13 @@ class Application(tk.Frame):
         self.quit.pack(side="right")
 
         self.text1 = tk.Label(self.frame_player1_text, text="Welcome to Battleships", fg="red")
-        self.text1.grid(row=0, column=0)
-        self.text1.grid(ipady=10)
+        self.text1.grid(row=0, column=0, pady=40)
 
         self.text2 = tk.Label(self.frame_player2_text, text="Created by: Jacek Oleksy PK 2021", fg="red")
-        self.text2.pack(side="top")
-        self.text2.place(rely=0.4, relx=0.28)
+        self.text2.grid(row=0, column=0, pady=40)
 
     def start(self):
-        self.reset = tk.Button(self.frame_menu, text="Reset", fg="blue", command=self.destroy)
+        self.reset = tk.Button(self.frame_menu, text="Reset", fg="blue", command=self.reset_action)
         self.reset.pack(side="left")
         self.reset.place(relx=0.49)
         self.draw_Player_Board(10)
@@ -79,7 +78,13 @@ class Application(tk.Frame):
         print('\n')
         print('\n'.join(str(p) for p in self.game.player_board.board))
 
+
+    def reset_action(self):
+        self.draw_Player_Board(10)
+        self.game.player_board = bs.Board(self.game.player_board.size)
+
     def draw_Player_Board(self, size):
+        self.text1.configure(text="Current ship: "+str(self.ship_length)+"-field, direction: " + str(self.ship_direction.name))
         self.fields_buttons = []
         for num, i in enumerate(['A','B','C','D','E','F','G','H','I','J']):
             letter = tk.Label(self.frame_player1_board, text=i, height=2, width=4)
@@ -100,18 +105,18 @@ class Application(tk.Frame):
             for x, y in ship.ship_overlay_fields_clear:
                 self.fields_buttons[x * 10 + y].configure(background='orange')
         if sum([y for x, y in self.game.player_board.available_ship_list]) == 0:
-            self.text1.configure(text="Plansza gotowa!")
-            print("Gotowa plansza!")
+            self.text1.configure(text="Your board is ready! Press Play to start game")
+            self.start.configure(text="Play")
 
     def change_ship_length(self, i):
         self.ship_length = i
-        #self.draw_Player_Board(10)
         print(self.ship_length)
+        self.text1.configure(text="Current ship: "+str(self.ship_length)+"-field, direction: " + str(self.ship_direction.name))
 
     def change_direction(self, i):
         self.ship_direction = i
-        #self.draw_Player_Board(10)
         print(self.ship_direction.name)
+        self.text1.configure(text="Current ship: "+str(self.ship_length)+"-field, direction: " + str(self.ship_direction.name))
 
 if __name__ == "__main__":
     root = tk.Tk()
