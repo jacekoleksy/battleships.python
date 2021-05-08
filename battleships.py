@@ -77,7 +77,6 @@ class Board:
         return True
 
     def add_ship(self, ship):
-        print(ship.x, ship.y)
         for ship_length, num in self.available_ship_list:
             if ship_length == ship.length and num > 0:
                 if self.is_available(ship):
@@ -158,10 +157,7 @@ class Game:
         self.player_board = Board(size)
         self.ai_board = RandomBoard(size)
 
-    def player_shoot(self, ai_board):
-        x, y = input("Podaj wspolrzedne strzalu").split()
-        x = int(x)
-        y = int(y)
+    def player_shoot(self, ai_board, x, y):
         if ai_board.correct_target(x, y):
             ai_board.shoot(x, y)
             return True
@@ -173,15 +169,15 @@ class Game:
         while not player_board.correct_target(x, y):
             x = random.randint(0, player_board.size - 1)
             y = random.randint(0, player_board.size - 1)
-        print(x, y, end=' ')
         player_board.shoot(x, y)
+        return x, y
 
     def gameover(self):
         if self.ai_board.gameover():
-            print("Bot wygral")
+            print("You Won")
             return True
         elif self.player_board.gameover():
-            print("Ty wygrales")
+            print("AI won")
             return True
         return False
 
@@ -195,11 +191,6 @@ class Game:
             if self.player_shoot(self.ai_board):
                 time.sleep(0.5)
                 self.random_shoot(self.player_board)
-            # self.random_shoot(self.ai_board)
-            # time.sleep(0.1)
-            # print('\t\t\t', end='')
-            # self.random_shoot(self.player_board)
-            # time.sleep(0.1)
 
     def reset(self):
         self.player_board.board.clear()
