@@ -1,6 +1,5 @@
 import enum
 import random
-import time
 
 global ship_added
 
@@ -17,9 +16,9 @@ class Direction(enum.Enum):
 
 
 class Ship:
-    def __init__(self, xx, yy, direction, length):
-        self.x = xx
-        self.y = yy
+    def __init__(self, x, y, direction, length):
+        self.x = x
+        self.y = y
         self.direction = direction
         self.length = length
 
@@ -64,7 +63,7 @@ class Ship:
 class Board:
     def __init__(self, size=10):
         self.board = [['o' for i in range(size)] for j in range(size)]
-        self.size = size
+        self.__size = size
         self.available_ship_list = [[1, 4], [2, 3], [3, 2], [4, 1]]
         self.ship_list = []
         self.hits = 0
@@ -72,7 +71,7 @@ class Board:
 
     def is_available(self, ship):
         for x, y in ship.ship_fields:
-            if x < 0 or y < 0 or x > self.size - 1 or y > self.size - 1 or self.board[x][y] != 'o':
+            if x < 0 or y < 0 or x > self.__size - 1 or y > self.__size - 1 or self.board[x][y] != 'o':
                 return False
         return True
 
@@ -95,7 +94,7 @@ class Board:
         return None
 
     def correct_target(self, x, y):
-        if x not in range(self.size) or y not in range(self.size) or self.board[x][y] == '.' or self.board[x][y] == '^':
+        if x not in range(self.__size) or y not in range(self.__size) or self.board[x][y] == '.' or self.board[x][y] == '^':
             return False
         return True
 
@@ -122,34 +121,33 @@ class RandomBoard(Board):
         super().__init__(size)
         for index in range(0, len(self.available_ship_list)):
             for i in range(0, self.available_ship_list[index - 1][1]):
-                ship_added = False
-                while not ship_added:
-                    x = random.randint(0, self.size - 1)
-                    y = random.randint(0, self.size - 1)
+                ship_add = False
+                while not ship_add:
+                    x = random.randint(0, size - 1)
+                    y = random.randint(0, size - 1)
                     ship_direction = random.choice(list(Direction))
                     ship = Ship(x, y, ship_direction, self.available_ship_list[index - 1][0])
                     while self.is_available(ship):
                         self.add_ship(ship)
-                        ship_added = True
+                        ship_add = True
 
 
-class PlayerBoard(Board):
-    def __init__(self, size=10):
-        super().__init__(size)
-        for index in range(0, len(self.available_ship_list)):
-            for i in range(0, self.available_ship_list[index][1]):
-                ship_added = False
-                while not ship_added:
-                    pass
-                    print("Wielkosc statku:", self.available_ship_list[index][0])
-                    x, y = input('Podaj x i y\t').split()
-                    x = int(x)
-                    y = int(y)
-                    ship = Ship(x, y, Direction.NORTH, self.available_ship_list[index][0])
-                    while self.is_available(ship):
-                        self.add_ship(ship)
-                        ship_added = True
-                        print('\n'.join(str(p) for p in self.board))
+# class PlayerBoard(Board):
+#     def __init__(self, size=10):
+#         super().__init__(size)
+#         for index in range(0, len(self.available_ship_list)):
+#             for i in range(0, self.available_ship_list[index][1]):
+#                 ship_add = False
+#                 while not ship_add:
+#                     pass
+#                     print("Wielkosc statku:", self.available_ship_list[index][0])
+#                     x, y = input('Podaj x i y\t').split()
+#                     x = int(x)
+#                     y = int(y)
+#                     ship = Ship(x, y, Direction.NORTH, self.available_ship_list[index][0])
+#                     while self.is_available(ship):
+#                         self.add_ship(ship)
+#                         ship_add = True
 
 
 class Game:
@@ -157,18 +155,20 @@ class Game:
         self.player_board = Board(size)
         self.ai_board = RandomBoard(size)
 
-    def player_shoot(self, ai_board, x, y):
+    @staticmethod
+    def player_shoot(ai_board, x, y):
         if ai_board.correct_target(x, y):
             ai_board.shoot(x, y)
             return True
         else:
             return False
 
-    def random_shoot(self, player_board):
+    @staticmethod
+    def random_shoot(player_board):
         x, y = -1, -1
         while not player_board.correct_target(x, y):
-            x = random.randint(0, player_board.size - 1)
-            y = random.randint(0, player_board.size - 1)
+            x = random.randint(0, player_board._Board__size - 1)
+            y = random.randint(0, player_board._Board__size - 1)
         player_board.shoot(x, y)
         return x, y
 
@@ -180,21 +180,6 @@ class Game:
             print("AI won")
             return True
         return False
-
-    def play(self):
-        if random.randint(0, 1) == 0:
-            if self.player_shoot(self.ai_board):
-                pass
-        time.sleep(0.5)
-        self.random_shoot(self.player_board)
-        while not self.gameover():
-            if self.player_shoot(self.ai_board):
-                time.sleep(0.5)
-                self.random_shoot(self.player_board)
-
-    def reset(self):
-        self.player_board.board.clear()
-        self.player_board = PlayerBoard()
 
 
 class Error(Exception):
@@ -216,16 +201,3 @@ class NoShipThatSizeAvailableException(Error):
         self.expression = expression
         self.message = message
         pass
-
-
-if __name__ == "__main__":
-    ship = Ship(4, 3, Direction.NORTH, 4)
-    game = Game()
-    print('\n'.join(str(p) for p in game.ai_board.board))
-    print('\n')
-    print('\n'.join(str(p) for p in game.player_board.board))
-    game.player_board.add_ship(ship)
-    game.play()
-    print('\n'.join(str(p) for p in game.ai_board.board))
-    print('\n')
-    print('\n'.join(str(p) for p in game.player_board.board))
