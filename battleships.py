@@ -25,9 +25,9 @@ class Ship:
     @property
     def ship_fields(self):
         if self.direction == Direction.WEST:
-            return [(self.x, self.y - i) for i in range(self.length)]
+            return reversed([(self.x, self.y - i) for i in range(self.length)])
         if self.direction == Direction.SOUTH:
-            return [(self.x + i, self.y) for i in range(self.length)]
+            return reversed([(self.x + i, self.y) for i in range(self.length)])
         if self.direction == Direction.EAST:
             return [(self.x, self.y + i) for i in range(self.length)]
         if self.direction == Direction.NORTH:
@@ -68,6 +68,7 @@ class Board:
         self.ship_list = []
         self.hits = 0
         self.hits_left = sum([x * y for [x, y] in self.available_ship_list])
+        self.ai_hits = []
 
     def is_available(self, ship):
         for x, y in ship.ship_fields:
@@ -80,8 +81,18 @@ class Board:
             if ship_length == ship.length and num > 0:
                 if self.is_available(ship):
                     self.ship_list.append(ship)
+                    iter = 0
                     for x, y in ship.ship_fields:
-                        self.board[x][y] = str(ship.length)
+                        iter += 1
+                        if ship.length == 1:
+                            self.board[x][y] = str(0)
+                            break
+                        if iter == 1:
+                            self.board[x][y] = str(1)
+                        elif iter == ship.length:
+                            self.board[x][y] = str(3)
+                        else:
+                            self.board[x][y] = str(2)
                     for x, y in ship.ship_overlay_fields_clear:
                         self.board[x][y] = 'x'
                     return True
@@ -93,8 +104,17 @@ class Board:
                 return ship
         return None
 
+    def hit_and_sink(self, x, y):
+        ship = self.get_ship(x, y)
+        for (x, y) in ship.ship_fields:
+            if self.board[x][y][-1] != '^':
+                return False
+        for (x, y) in ship.ship_overlay_fields_clear:
+            self.board[x][y] = '.'
+        return True
+
     def correct_target(self, x, y):
-        if x not in range(self.__size) or y not in range(self.__size) or self.board[x][y] == '.' or self.board[x][y] == '^':
+        if x not in range(self.__size) or y not in range(self.__size) or self.board[x][y][-1] == '.' or self.board[x][y][-1] == '^':
             return False
         return True
 
@@ -102,7 +122,7 @@ class Board:
         if not self.correct_target(x, y):
             return False
         if self.get_ship(x, y) is not None:
-            self.board[x][y] = '^'
+            self.board[x][y] += '^'
             self.hits += 1
             print("Gratulacje trafiles! \t Zostalo", self.hits_left - self.hits, "pol do trafienia!")
         else:
@@ -171,6 +191,45 @@ class Game:
             y = random.randint(0, player_board._Board__size - 1)
         player_board.shoot(x, y)
         return x, y
+
+    @staticmethod
+    def ai_shoot(board):
+        if not len(board.ai_hits):
+            x, y = -1, -1
+            while not board.correct_target(x, y):
+                x = random.randint(0, board._Board__size - 1)
+                y = random.randint(0, board._Board__size - 1)
+        elif len(board.ai_hits) == 1:
+            print("Jest!")
+            x, y = -1, -1
+            while not board.correct_target(x, y):
+                y = board.ai_hits[0][1]
+                x = random.randint(board.ai_hits[0][0] - 1, board.ai_hits[0][0] + 1)
+                if x == board.ai_hits[0][0]:
+                    y = random.randint(board.ai_hits[0][1] - 1, board.ai_hits[0][1] + 1)
+                print(x, y)
+        else:
+            print(board.ai_hits, len(board.ai_hits))
+            x, y = board.ai_hits[0]
+            if not x == board.ai_hits[1][0]:
+                while not board.correct_target(x, y):
+                    x = random.randint(min(x[0] for x in board.ai_hits)-1, max(x[0] for x in board.ai_hits)+1)
+            else:
+                while not board.correct_target(x, y):
+                    y = random.randint(min(y[1] for y in board.ai_hits)-1, max(y[1] for y in board.ai_hits)+1)
+        if board.get_ship(x, y) is not None:
+            print("Nastepne powinno wejsc do petli", x, y)
+            board.board[x][y] += '^'
+            board.hits += 1
+            board.ai_hits.append([x, y])
+            if board.hit_and_sink(x, y):
+                board.ai_hits = []
+
+
+        else:
+            board.board[x][y] = '.'
+        return True
+
 
     def gameover(self):
         if self.ai_board.gameover():
