@@ -356,6 +356,15 @@ class Application(tk.Frame):
             self.__reset_activate = True
 
         elif self.__game.player_board.gameover():
+            # for i in range(len(self.__game.ai_board.board)):
+            #     for j in range(len(self.__game.ai_board.board[i])):
+            #         if self.__game.ai_board.board[i][j] == '1' or self.__game.ai_board.board[i][j] == '2' or self.__game.ai_board.board[i][j] == '3' or self.__game.ai_board.board[i][j] == '0':
+            #             if self.__game.ai_board.get_ship(i, j).direction == bs.Direction.WEST or self.__game.ai_board.get_ship(i, j).direction == bs.Direction.EAST:
+            #                 self.__enemy_fields_buttons[i * 10 + j].configure(image=self.__img_ship_we_dict[self.__game.ai_board.board[i][j]])
+            #             if self.__game.ai_board.get_ship(i, j).direction == bs.Direction.NORTH or self.__game.ai_board.get_ship(i, j).direction == bs.Direction.SOUTH:
+            #                 self.__enemy_fields_buttons[i * 10 + j].configure(image=self.__img_ship_ns_dict[self.__game.ai_board.board[i][j]])
+            self.change_colors_after_game_over(self.__game.ai_board, self.__enemy_fields_buttons)
+
             self.__text_command.destroy()
             self.__text_final = tk.Label(self.__root, text="AI won", fg="white", width=10, bg='#00325b',
                                          font='WarHeliosCondCBold 25 bold')
@@ -376,7 +385,7 @@ class Application(tk.Frame):
         """Changes colors of board ingame"""
         for i in range(len(board.board)):
             for j in range(len(board.board[i])):
-                if board.board[i][j][-1] == '^':
+                if board.board[i][j].find('^') >= 0:
                     if board.hit_and_sink(i, j) or board != self.__game.ai_board:
                         if board.get_ship(i, j).direction == bs.Direction.WEST or board.get_ship(i,
                                                                                                  j).direction == bs.Direction.EAST:
@@ -402,6 +411,23 @@ class Application(tk.Frame):
                         buttons[i * 10 + j].configure(image=self.__img_ship_ns_dict[board.board[i][j]])
                 else:
                     buttons[i * 10 + j].configure(image=self.__img_sea2)
+
+    def change_colors_after_game_over(self, board, buttons):
+        """Changes colors of board before game starts"""
+        for i in range(len(board.board)):
+            for j in range(len(board.board[i])):
+                if board.board[i][j] in ['0', '1', '2', '3']:
+                    if board.get_ship(i, j).direction == bs.Direction.WEST or board.get_ship(i,
+                                                                                             j).direction == bs.Direction.EAST:
+                        buttons[i * 10 + j].configure(image=self.__img_ship_we_dict[board.board[i][j]])
+                    if board.get_ship(i, j).direction == bs.Direction.NORTH or board.get_ship(i,
+                                                                                              j).direction == bs.Direction.SOUTH:
+                        buttons[i * 10 + j].configure(image=self.__img_ship_ns_dict[board.board[i][j]])
+                elif board.board[i][j].find('^') >= 0:
+                    if board.get_ship(i, j).direction == bs.Direction.WEST or board.get_ship(i, j).direction == bs.Direction.EAST:
+                        buttons[i * 10 + j].configure(image=self.__img_hit_we_dict[board.board[i][j][0]])
+                    if board.get_ship(i, j).direction == bs.Direction.NORTH or board.get_ship(i, j).direction == bs.Direction.SOUTH:
+                        buttons[i * 10 + j].configure(image=self.__img_hit_ns_dict[board.board[i][j][0]])
 
     def change_ship_length(self, i):
         """Changes the length of current ship that you want to place"""
@@ -438,7 +464,7 @@ class ButtonErrorAfterClickException(Error):
 
 
 class CannotPlaceThisShipException(Error):
-    """Exception riases when you pick the wrong fields or you pick it during the game"""
+    """Exception raises when you pick the wrong fields or you pick it during the game"""
 
     def __init__(self, expression, message):
         self.expression = expression
