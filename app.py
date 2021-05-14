@@ -11,7 +11,27 @@ import battleships as bs
 ###################################################
 
 class Application(tk.Frame):
+    """
+    Class Application -> Class responsible for the battleships interface
+    ...
+    Attributes
+    ----------
+    Almost every one of App arguments are images, lists of buttons and labels
+    But there are also:
+    __size : int
+        stores size of boards in game
+    __ship_length : int
+        stores length of actual placed ship
+    __ship_direction : bs.Direction
+        stores direction of actual placed ship
+    __reset_activate : bool
+        variable used in MyExceptions - checks if u didnt queue up shots when the game is over (it caused errors)
+
+    There are a lot of other variables initialized outside __init__: But there are only some buttons/images/labels
+    Because I have to change them every few clicks - I ve just made of them class fields instead of spamming new ones
+    """
     def __init__(self, _root, _canvas):
+        """Initialize Application object using class variables"""
         super().__init__(_root)
         self.__root = _root
         self.__root.geometry("1300x770")
@@ -55,6 +75,7 @@ class Application(tk.Frame):
         self.__reset_activate = False
 
     def create_widgets(self):
+        """Creating start and quit buttons"""
         self.__start = tk.Button(self.__root, text="Start game", fg="white", bg='#376f9f',
                                  font='WarHeliosCondCBold 25 bold', width=15, command=self.start_action)
         self.__canvas.create_window(140, 150, anchor='nw', window=self.__start)
@@ -64,6 +85,10 @@ class Application(tk.Frame):
         self.__canvas.create_window(920, 150, anchor='nw', window=self.__quit)
 
     def start_action(self):
+        """
+        Method executed at the beginning of the game (after clicking start button):
+        Used for creating basic buttons responsible for navigation of the ship and reset/random buttons
+        """
         self.__start.destroy()
 
         self.__text_ship = tk.Label(self.__root, fg="white", bg='#00325b', width=30)
@@ -106,12 +131,20 @@ class Application(tk.Frame):
             self.__canvas.create_window(220, 320 + i.value * 30, anchor='nw', window=self.__direction_buttons[-1])
 
     def reset_action(self):
+        """
+        Method executed after the reset of the game (after clicking reset button):
+        Clears player board and resets buttons
+        """
         self.__start.destroy()
         self.draw_player_board(self.__size)
         self.__game.player_board = bs.Board(self.__game.player_board._Board__size)
         self.__text_command.configure(text="Set up your ships", width=30)
 
     def reset_action_ingame(self):
+        """
+        Method executed after the reset during the game:
+        I had to change reset action ingame, because player can remember the coordinates of enemy ships - so we are creating enemy table again
+        """
         for i in range(len(self.__enemy_fields_buttons)):
             self.__enemy_fields_buttons[i].destroy()
         self.__text_command.destroy()
@@ -131,6 +164,9 @@ class Application(tk.Frame):
         self.__reset_activate = True
 
     def random_board(self):
+        """
+        Method used for executing RandomBoard method on player/enemy board and drawing it
+        """
         self.draw_player_board(self.__size)
         self.__game.player_board = bs.RandomBoard(self.__size)
         self.change_colors_before_start(self.__game.player_board, self.__fields_buttons)
@@ -141,6 +177,9 @@ class Application(tk.Frame):
         self.__canvas.create_window(140, 150, anchor='nw', window=self.__start)
 
     def draw_player_board(self, size):
+        """
+        Method responsible for drawing clear player board with board legend
+        """
         self.__text_ship.configure(
             text="Current ship: " + str(self.__ship_length) + "-field, direction: " + str(self.__ship_direction.name))
         self.__canvas.create_text(490, 260, text="Your board:", font='WarHeliosCondCBold 25 bold', fill='#376f9f')
@@ -160,6 +199,9 @@ class Application(tk.Frame):
                                             window=self.__fields_buttons[-1])
 
     def draw_enemy_board(self, size):
+        """
+        Method responsible for drawing enemy board with board legend
+        """
         self.__enemy_fields_buttons = []
         self.__legend_title = self.__canvas.create_text(890, 260, text="Enemy board:",
                                                         font='WarHeliosCondCBold 25 bold', fill='#ffd545')
@@ -179,9 +221,13 @@ class Application(tk.Frame):
                 self.__enemy_fields_buttons[-1].configure(width='20px', height='20px', image=self.__img_sea2)
                 self.__canvas.create_window(840 + j * 32, 318 + i / 10 * 320, anchor='nw',
                                             window=self.__enemy_fields_buttons[-1])
-        print('\n'.join(str(p) for p in self.__game.ai_board.board))
 
     def add_ship(self, ship):
+        """
+        Method responsible for adding the current ship to board
+            If player placed of all the available ships - changes command of start button
+            If player want to place ship when it isnt possible - method throws Exception
+        """
         if self.__game.player_board.add_ship(ship):
             self.__game.player_board.available_ship_list[ship.length - 1][1] -= 1
             for x, y in ship.ship_fields:
@@ -222,6 +268,10 @@ class Application(tk.Frame):
             self.__canvas.create_window(140, 150, anchor='nw', window=self.__start)
 
     def play(self):
+        """
+        Method responsible for the course of the game and order of the movements
+        I ve used update() and time.sleep to simulate "thinking" of AI and to create opportunity to queue up shots in specific order (reversed order)
+        """
         self.__reset_activate = False
         self.__start.destroy()
         self.__random.destroy()
@@ -249,11 +299,18 @@ class Application(tk.Frame):
         self.__text_command.configure(text='Your turn')
 
     def not_reset(self):
+        """
+        Method checks if field responsible for Exceptions is set to true
+            Then raises Exception
+        """
         if self.__reset_activate:
             raise ButtonErrorAfterClickException("ButtonErrorAfterClickException",
                                                  "You reset/finished the game - It isnt possible to shoot")
 
     def shoot(self, x, y):
+        """
+        Method responsible for player shot and continuing game in order
+        """
         if not self.__game.gameover():
             self.__root.update()
             time.sleep(0.5)
@@ -282,6 +339,10 @@ class Application(tk.Frame):
         self.gameover_print()
 
     def gameover_print(self):
+        """
+        Method responsible for printing final message and images after game over
+        Also throws Exception if you want to shot/place ship on any of boards
+        """
         if self.__game.ai_board.gameover():
             self.__text_command.destroy()
             self.__text_final = tk.Label(self.__root, text="You won", fg="white", width=10, bg='#00325b',
@@ -387,7 +448,6 @@ class CannotPlaceThisShipException(Error):
 if __name__ == "__main__":
     root = tk.Tk()
     canvas = tk.Canvas(root, width=1300, height=700)
-
     app = Application(root, canvas)
     root.mainloop()
     # print('\n'.join(str(p) for p in self._game.player_board.board))

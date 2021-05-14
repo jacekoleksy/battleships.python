@@ -235,6 +235,7 @@ class Game:
 
     @staticmethod
     def player_shoot(ai_board, x, y):
+        """Shoots field [x,y] on board passed as argument"""
         if ai_board.correct_target(x, y):
             ai_board.shoot(x, y)
             return True
