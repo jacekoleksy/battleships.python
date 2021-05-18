@@ -356,13 +356,6 @@ class Application(tk.Frame):
             self.__reset_activate = True
 
         elif self.__game.player_board.gameover():
-            # for i in range(len(self.__game.ai_board.board)):
-            #     for j in range(len(self.__game.ai_board.board[i])):
-            #         if self.__game.ai_board.board[i][j] == '1' or self.__game.ai_board.board[i][j] == '2' or self.__game.ai_board.board[i][j] == '3' or self.__game.ai_board.board[i][j] == '0':
-            #             if self.__game.ai_board.get_ship(i, j).direction == bs.Direction.WEST or self.__game.ai_board.get_ship(i, j).direction == bs.Direction.EAST:
-            #                 self.__enemy_fields_buttons[i * 10 + j].configure(image=self.__img_ship_we_dict[self.__game.ai_board.board[i][j]])
-            #             if self.__game.ai_board.get_ship(i, j).direction == bs.Direction.NORTH or self.__game.ai_board.get_ship(i, j).direction == bs.Direction.SOUTH:
-            #                 self.__enemy_fields_buttons[i * 10 + j].configure(image=self.__img_ship_ns_dict[self.__game.ai_board.board[i][j]])
             self.change_colors_after_game_over(self.__game.ai_board, self.__enemy_fields_buttons)
 
             self.__text_command.destroy()
@@ -473,6 +466,7 @@ class CannotPlaceThisShipException(Error):
 
 if __name__ == "__main__":
     root = tk.Tk()
+    print(tk.Tcl().call("info", "patchlevel"))
     canvas = tk.Canvas(root, width=1300, height=700)
     app = Application(root, canvas)
     root.mainloop()
