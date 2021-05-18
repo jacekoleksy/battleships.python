@@ -1,6 +1,7 @@
 # Project battleships.py 
 ![Algorithm schema](./images/battleships.png)
-* [General info](#general-info)
+* [General info](#general-info "Goto General Info")
+* Markup: [heading-1](#heading-1 "Goto heading-1")
 * [Technologies](#technologies)
 * [Setup](#setup)
 ## General info
@@ -36,3 +37,4 @@ Project is created with:
 
 ## Setup
 To run this project, install it locally using npm:
+* [General info](#general-info "Goto General Info")
