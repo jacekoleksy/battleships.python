@@ -38,8 +38,7 @@ Wykonanie całej gry od zera, zajęło mi zaledwie 5 dni, a tak naprawdę najwi�
 Wszystkie podpunkty z [Opisu zadania](#general-info "Goto General Info") zawarłem w programie, a [Testy](#general-info "Goto General Info") wszystkie przechodzą pozytywnie.
 
 Swój program rozwinąłem o dodatkowe funkcjonalności:
-* Dodanie funkcjonalności trafiony-zatopiony, która pomaga graczowi oraz przeciwnikowi, aby przypadkowo nie strzelił w pola, na których nie może być juz statku
-	https://github.com/jacekoleksy/battleships.python/blob/092d2bc3a9c70c24b28bf1b8199a6e9e531ca640/battleships.py#L161-L169
+* Dodanie funkcjonalności trafiony-zatopiony, która pomaga graczowi oraz przeciwnikowi, aby przypadkowo nie strzelił w pola, na których nie może być juz statku [Click](https://github.com/jacekoleksy/battleships.python/blob/092d2bc3a9c70c24b28bf1b8199a6e9e531ca640/battleships.py#L161-L169 "Goto")
 * Ulepszona sztuczna inteligencja, która po trafieniu i nie zatopieniu statku - strzela losowo w jedno z 4ch sąsiadujących pól, po czym jeśli trafi 2gi raz i nie zatopi - szuka orientacji statku (ma w tym przypadku juz tylko 2 pola do wyboru). Po zatopieniu statku AI oznacza pola dookoła jako te, w które już nie będzie strzelać. Sprawiło to, że mimo dużej losowości gry Statki - potrafiłem przegrać po 10 razy pod rząd.
 * Mozliwość losowego, poprawnego ustawienia statków na własnej planszy (możliwe po naciśnięciu przycisku Start, w trakcie rozstawiania statków i po resecie lub zakończeniu gry)
 * Dzięki użyciu `self.__root.update()` i `time.sleep(0.5)` umożliwiłem, zakolejkowanie ruchów od ostatniego do pierwszego zaznaczonego, co sprawiło, że gra może przebiegać szybciej, jednocześnie nie sprawiając, że przeciwnik (AI) zostaje w tyle
