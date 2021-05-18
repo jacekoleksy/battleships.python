@@ -35,10 +35,10 @@ Projekt polega na napisaniu gry Statki o ogólnych założeniach:
 * Wymagane konstrukcje:
 	* [x] 1. Wyrażenia lambda	[`code1`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L121 "Goto") [`code2`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L129 "Goto") [`code3`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L195 "Goto")
 	* [x] 2. List comprehensions	[`code1`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L53-L61 "Goto") [`code2`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L67-L81 "Goto") [`code3`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L116 "Goto")
-	* [x] 3. Wyjątki 		[`code1`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L53-L61 "Goto")
+	* [x] 3. Wyjątki 		[`code1`](https://github.com/jacekoleksy/battleships.python/blob/6486582cdcc28c33d141a93ceda200d275c50232/app.py#L446-L464 "Goto") [`error`](https://github.com/jacekoleksy/battleships.python/blob/6486582cdcc28c33d141a93ceda200d275c50232/app.py#L250-L263 "Goto")
 	* [x] 4. Moduły i klasy: cała gra znajduje się w dwóch plikach:
 		* app.by - Odpowiedzialnej z caly interfejs graficzny i wykonywanie czynności w dobrej kolejności
-		* battleships.py - Odpowiedzialnej za obliczanie, walidację strzałów i logikę aplikacji
+		* battleships.py - Odpowiedzialnej za obliczanie, walidację i logikę aplikacji
 
 ## Description
 Wykonanie całej gry od zera, zajęło mi zaledwie 5 dni, a tak naprawdę najwięcej czasu zajęło mi robienie grafiki, dobieranie koloru i szeroko pojęty wygląd aplikacji.
