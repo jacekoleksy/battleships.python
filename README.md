@@ -33,9 +33,9 @@ Projekt polega na napisaniu gry Statki o ogólnych założeniach:
 	* [x] 11. Przegranie gry (np. Przez aktywację super-instynktu gracza komputera). Rozpoczęcie nowej gry bez ponownego uruchamiania programu. 
 
 * Wymagane konstrukcje:
-	* [x] 1. Wyrażenia lambda	[`code1`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L121 "Goto") [`code2`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L129 "Goto") [`code3`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L195 "Goto")
-	* [x] 2. List comprehensions	[`code1`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L53-L61 "Goto") [`code2`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L67-L81 "Goto") [`code3`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L116 "Goto")
-	* [x] 3. Wyjątki 		[`code1`](https://github.com/jacekoleksy/battleships.python/blob/6486582cdcc28c33d141a93ceda200d275c50232/app.py#L446-L464 "Goto") [`error`](https://github.com/jacekoleksy/battleships.python/blob/6486582cdcc28c33d141a93ceda200d275c50232/app.py#L250-L263 "Goto")
+	* [x] 1. Wyrażenia lambda <br/>[`code1`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L121 "Goto") [`code2`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L129 "Goto") [`code3`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L195 "Goto")
+	* [x] 2. List comprehensions <br/>[`code1`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L53-L61 "Goto") [`code2`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L67-L81 "Goto") [`code3`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L116 "Goto")
+	* [x] 3. Wyjątki <br/>[`code1`](https://github.com/jacekoleksy/battleships.python/blob/6486582cdcc28c33d141a93ceda200d275c50232/app.py#L446-L464 "Goto") [`error`](https://github.com/jacekoleksy/battleships.python/blob/6486582cdcc28c33d141a93ceda200d275c50232/app.py#L250-L263 "Goto")
 	* [x] 4/5. Moduły i klasy: cała gra znajduje się w dwóch plikach:
 		* app.by - Odpowiedzialnej z caly interfejs graficzny i wykonywanie czynności w dobrej kolejności
 		* battleships.py - Odpowiedzialnej za obliczanie, walidację i logikę aplikacji
@@ -46,7 +46,7 @@ Projekt polega na napisaniu gry Statki o ogólnych założeniach:
 ## Description
 Wykonanie całej gry od zera, zajęło mi zaledwie 5 dni, a tak naprawdę najwięcej czasu zajęło mi robienie grafiki, dobieranie koloru i szeroko pojęty wygląd aplikacji.
 
-Od razu nadmienię, że program nie jest najbardziej optymalną wersją na jaką było mnie stać: chociażby zamiast ustawiać `command=''` dla przycisków po tym jak nie można ich już kliknąć - wolałem użyć metody `destroy()`, aby przyciski zniknęły, po czym znowu (jeśli będą potrzebne) wyświetlić je. Tak samo grafika aktualnie stawianego statku - zamiast obracać jeden obraz o 90° - stworzyłem 4 różne, aby nie zmieniać każdorazowo położenia obrazka (x, y).
+Od razu nadmienię, że program nie jest najbardziej optymalną wersją na jaką było mnie stać: chociażby zamiast ustawiać `command=''` dla przycisków po tym jak nie można ich już kliknąć - wolałem użyć metody `destroy()`, aby przyciski zniknęły, po czym znowu (jeśli będą potrzebne) wyświetlić je (wszystko po to, aby nie wyświetlały się przyciski których nie można użyć). Tak samo grafika aktualnie stawianego statku - zamiast obracać jeden obraz o 90° - stworzyłem 4 różne, aby nie zmieniać każdorazowo położenia obrazka (x, y).
 
 Wszystkie podpunkty z [Opisu zadania](#general-info "Goto General Info") zawarłem w programie, a [Testy](#general-info "Goto General Info") wszystkie przechodzą pozytywnie.
 
@@ -69,6 +69,15 @@ Swój program rozwinąłem o dodatkowe funkcjonalności:
 ![image](https://user-images.githubusercontent.com/47715648/118712388-05764280-b821-11eb-87df-7b045e3cb100.png)
 
 ![image](https://user-images.githubusercontent.com/47715648/118712052-9993da00-b820-11eb-9394-2c987de6afb9.png)
+
+* W grze na dole ekranu jest również pasek powiadomień, oto przykładowe komendy, które wyświetla:
+
+![image](https://user-images.githubusercontent.com/47715648/118859238-4f6f2f00-b8da-11eb-9f48-eb9dbaa56cbb.png)
+![image](https://user-images.githubusercontent.com/47715648/118859284-5b5af100-b8da-11eb-996c-829121f0ec16.png)
+![image](https://user-images.githubusercontent.com/47715648/118859322-644bc280-b8da-11eb-8621-b775e9e6dc4b.png)
+![image](https://user-images.githubusercontent.com/47715648/118859365-6f065780-b8da-11eb-9f2d-7852b116ed5f.png)
+![image](https://user-images.githubusercontent.com/47715648/118859492-952bf780-b8da-11eb-939d-b6ce7d4882cf.png)
+
 
 ## Technologies
 Project is created with:
