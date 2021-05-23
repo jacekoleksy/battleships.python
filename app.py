@@ -246,6 +246,7 @@ class Application(tk.Frame):
             self.__ship_type_buttons[ship.length - 1].configure(
                 text=str(self.__game.player_board.available_ship_list[ship.length - 1][1]) + ' x ' + str(
                     ship.length) + '-field ship')
+            return True
         else:
             try:
                 raise CannotPlaceThisShipException("CannotPlaceThisShipException",
@@ -266,6 +267,8 @@ class Application(tk.Frame):
             self.__start = tk.Button(self.__root, text="Play", fg="white", bg='#376f9f',
                                      font='WarHeliosCondCBold 25 bold', width=15, command=self.play)
             self.__canvas.create_window(140, 150, anchor='nw', window=self.__start)
+            return True
+        return False
 
     def play(self):
         """
@@ -335,6 +338,11 @@ class Application(tk.Frame):
 
                 self.__game.ai_shoot(self.__game.player_board)
                 self.change_colors_ingame(self.__game.player_board, self.__fields_buttons)
+                self.__text_command.configure(text='Your turn')
+            else:
+                self.__text_command.configure(text='Invalid field')
+                self.__root.update()
+                time.sleep(0.5)
                 self.__text_command.configure(text='Your turn')
         self.gameover_print()
 
@@ -466,7 +474,6 @@ class CannotPlaceThisShipException(Error):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    print(tk.Tcl().call("info", "patchlevel"))
     canvas = tk.Canvas(root, width=1300, height=700)
     app = Application(root, canvas)
     root.mainloop()
