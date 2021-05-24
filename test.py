@@ -23,7 +23,7 @@ class Test(unittest.TestCase):
         root.update()
         time.sleep(1)
 
-        self.assertTrue(app.add_ship(bs.Ship(0, 0, bs.Direction.SOUTH, 4)))
+        app.add_ship(bs.Ship(0, 0, bs.Direction.SOUTH, 4))
         root.update()
         time.sleep(1)
 
@@ -266,15 +266,15 @@ class Test(unittest.TestCase):
         root.update()
         time.sleep(1)
 
-        self.assertTrue(app.add_ship(bs.Ship(0, 0, bs.Direction.SOUTH, 4)))
+        app.add_ship(bs.Ship(0, 0, bs.Direction.SOUTH, 4))
         root.update()
         time.sleep(1)
 
-        self.assertTrue(app.add_ship(bs.Ship(5, 0, bs.Direction.EAST, 3)))
+        app.add_ship(bs.Ship(5, 0, bs.Direction.EAST, 3))
         root.update()
         time.sleep(1)
 
-        self.assertTrue(app.add_ship(bs.Ship(5, 5, bs.Direction.EAST, 3)))
+        app.add_ship(bs.Ship(5, 5, bs.Direction.EAST, 3))
         root.update()
         time.sleep(1)
 

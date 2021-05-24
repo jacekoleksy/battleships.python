@@ -39,7 +39,8 @@ class Ship:
     length : int
         length of the ship
     """
-    def __init__(self, x, y, direction, length):
+
+    def __init__(self, x: int, y: int, direction: Direction, length: int):
         """Initialize Ship object using class variables"""
         self.x = x
         self.y = y
@@ -81,7 +82,7 @@ class Ship:
                        (self.x + 1, self.y), (self.x - self.length, self.y)]
 
     @property
-    def ship_overlay_fields_clear(self, size=10):
+    def ship_overlay_fields_clear(self, size: int = 10):
         """Returns list of fields around the ship minus fields out of range"""
         return [row for idx, row in enumerate(self.ship_overlay_fields) if all(0 <= n < size for n in row)]
 
@@ -111,7 +112,8 @@ class Board:
     ai_hits : [[int, int]]
         list of coordinates used in AI_shot algorithm
     """
-    def __init__(self, size=10):
+
+    def __init__(self, size: int = 10):
         """Initialize Board object using class variables"""
         self.board = [['o' for i in range(size)] for j in range(size)]
         self.__size = size
@@ -121,14 +123,14 @@ class Board:
         self.hits_left = sum([x * y for [x, y] in self.available_ship_list])
         self.ai_hits = []
 
-    def is_available(self, ship):
+    def is_available(self, ship: Ship):
         """Checks if its possible to place a ship"""
         for x, y in ship.ship_fields:
             if x < 0 or y < 0 or x > self.__size - 1 or y > self.__size - 1 or self.board[x][y] != 'o':
                 return False
         return True
 
-    def add_ship(self, ship):
+    def add_ship(self, ship: Ship):
         """Adds a ship to board and changes the values of the array fields"""
         for ship_length, num in self.available_ship_list:
             if ship_length == ship.length and num > 0:
@@ -151,14 +153,14 @@ class Board:
                     return True
         return False
 
-    def get_ship(self, x, y):
+    def get_ship(self, x: int, y: int):
         """Returns ship object which is placed on these coordinates"""
         for ship in self.ship_list:
             if (x, y) in ship.ship_fields:
                 return ship
         return None
 
-    def hit_and_sink(self, x, y):
+    def hit_and_sink(self, x: int, y: int):
         """Checks if ship on these coordinates is hit and sink, and if so - marks them as misses"""  # Because it isnt possible to hit another ship on those
         ship = self.get_ship(x, y)
         for (x, y) in ship.ship_fields:
@@ -168,14 +170,14 @@ class Board:
             self.board[x][y] = '.'
         return True
 
-    def correct_target(self, x, y):
+    def correct_target(self, x: int, y: int):
         """Checks if player can shot these coordinates"""  # Because player might try to shoot it earlier or coordinates are wrong
         if x not in range(self.__size) or y not in range(self.__size) or self.board[x][y][-1] == '.' or \
                 self.board[x][y][-1] == '^':
             return False
         return True
 
-    def shoot(self, x, y):
+    def shoot(self, x: int, y: int):
         """Shot at the field with these coordinates"""
         if not self.correct_target(x, y):
             return False
@@ -201,7 +203,8 @@ class RandomBoard(Board):
     ----------
     Same as for the Board
     """
-    def __init__(self, size=10):
+
+    def __init__(self, size: int = 10):
         """Initialize RandomBoard object using Board __init__ but extended by random placed ships"""
         super().__init__(size)
         for index in range(0, len(self.available_ship_list)):
@@ -228,13 +231,14 @@ class Game:
     ai_board : RandomBoard
         stores Board object for enemy (AI)
     """
-    def __init__(self, size=10):
+
+    def __init__(self, size: int = 10):
         """Initialize Game object using two Board objects - for player1 and player2"""
         self.player_board = Board(size)
         self.ai_board = RandomBoard(size)
 
     @staticmethod
-    def player_shoot(ai_board, x, y):
+    def player_shoot(ai_board: Board, x: int, y: int):
         """Shoots field [x,y] on board passed as argument"""
         if ai_board.correct_target(x, y):
             ai_board.shoot(x, y)
@@ -243,7 +247,7 @@ class Game:
             return False
 
     @staticmethod
-    def random_shoot(player_board):
+    def random_shoot(player_board: Board):
         """Shoots random field on board passed as argument"""
         x, y = -1, -1
         while not player_board.correct_target(x, y):
@@ -253,7 +257,7 @@ class Game:
         return x, y
 
     @staticmethod
-    def ai_shoot(player_board):
+    def ai_shoot(player_board: Board):
         """Shot on random field extended by AI"""
         if not len(player_board.ai_hits):
             x, y = -1, -1
@@ -286,7 +290,7 @@ class Game:
         else:
             player_board.board[x][y] = '.'
         return True
-
+    
     def gameover(self):
         """Checks which player has lost by number of fields"""
         if self.ai_board.gameover():

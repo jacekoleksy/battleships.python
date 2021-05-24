@@ -177,7 +177,7 @@ class Application(tk.Frame):
                                  font='WarHeliosCondCBold 25 bold', width=15, command=self.play)
         self.__canvas.create_window(140, 150, anchor='nw', window=self.__start)
 
-    def draw_player_board(self, size):
+    def draw_player_board(self, size: int):
         """
         Method responsible for drawing clear player board with board legend
         """
@@ -199,7 +199,7 @@ class Application(tk.Frame):
                 self.__canvas.create_window(455 + j * 32, 318 + i / 10 * 320, anchor='nw',
                                             window=self.__fields_buttons[-1])
 
-    def draw_enemy_board(self, size):
+    def draw_enemy_board(self, size: int):
         """
         Method responsible for drawing enemy board with board legend
         """
@@ -223,7 +223,7 @@ class Application(tk.Frame):
                 self.__canvas.create_window(840 + j * 32, 318 + i / 10 * 320, anchor='nw',
                                             window=self.__enemy_fields_buttons[-1])
 
-    def add_ship(self, ship):
+    def add_ship(self, ship: bs.Ship):
         """
         Method responsible for adding the current ship to board
             If player placed of all the available ships - changes command of start button
@@ -247,7 +247,6 @@ class Application(tk.Frame):
             self.__ship_type_buttons[ship.length - 1].configure(
                 text=str(self.__game.player_board.available_ship_list[ship.length - 1][1]) + ' x ' + str(
                     ship.length) + '-field ship')
-            return True
         else:
             try:
                 raise CannotPlaceThisShipException("CannotPlaceThisShipException",
@@ -311,7 +310,7 @@ class Application(tk.Frame):
             raise ButtonErrorAfterClickException("ButtonErrorAfterClickException",
                                                  "You reset/finished the game - It isnt possible to shoot")
 
-    def shoot(self, x, y):
+    def shoot(self, x: int, y: int):
         """
         Method responsible for player shot and continuing game in order
         """
@@ -383,7 +382,7 @@ class Application(tk.Frame):
             print(error.args)
             return False
 
-    def change_colors_ingame(self, board, buttons):
+    def change_colors_ingame(self, board: [[str]], buttons: [tk.Button]):
         """Changes colors of board ingame"""
         for i in range(len(board.board)):
             for j in range(len(board.board[i])):
@@ -400,7 +399,7 @@ class Application(tk.Frame):
                 if not board.board[i][j].find('.'):
                     buttons[i * 10 + j].configure(image=self.__img_miss)
 
-    def change_colors_before_start(self, board, buttons):
+    def change_colors_before_start(self, board: [[str]], buttons: [tk.Button]):
         """Changes colors of board before game starts"""
         for i in range(len(board.board)):
             for j in range(len(board.board[i])):
@@ -414,7 +413,7 @@ class Application(tk.Frame):
                 else:
                     buttons[i * 10 + j].configure(image=self.__img_sea2)
 
-    def change_colors_after_game_over(self, board, buttons):
+    def change_colors_after_game_over(self, board: [[str]], buttons: [tk.Button]):
         """Changes colors of board before game starts"""
         for i in range(len(board.board)):
             for j in range(len(board.board[i])):
@@ -431,7 +430,7 @@ class Application(tk.Frame):
                     if board.get_ship(i, j).direction == bs.Direction.NORTH or board.get_ship(i, j).direction == bs.Direction.SOUTH:
                         buttons[i * 10 + j].configure(image=self.__img_hit_ns_dict[board.board[i][j][0]])
 
-    def change_ship_length(self, i):
+    def change_ship_length(self, i: int):
         """Changes the length of current ship that you want to place"""
         self.__ship_length = i
         self.__text_ship.configure(
