@@ -12,7 +12,7 @@ class Test(unittest.TestCase):
         canvas = tk.Canvas(root, width=1300, height=700)
         app = ap.Application(root, canvas)
 
-        text = tk.Label(root, text="Test1 - Trying to place ship incorrectly", fg="red", width=30, bg='black',
+        text = tk.Label(root, text="Test1 - Trying to place ship incorrectly", fg="red", width=42, bg='black',
                         font='WarHeliosCondCBold 25 bold')
         canvas.create_window(470, 710, anchor='nw', window=text)
 
@@ -175,7 +175,7 @@ class Test(unittest.TestCase):
         canvas = tk.Canvas(root, width=1300, height=700)
         app = ap.Application(root, canvas)
 
-        text = tk.Label(root, text="Test6 - Trying to shot same field twice", fg="red", width=42, bg='black',
+        text = tk.Label(root, text="Test6 - Trying to shot empty field twice", fg="red", width=42, bg='black',
                         font='WarHeliosCondCBold 25 bold')
         canvas.create_window(470, 710, anchor='nw', window=text)
 
@@ -210,6 +210,234 @@ class Test(unittest.TestCase):
         root.destroy()
         root.mainloop()
 
+    def test7(self):
+        root = tk.Tk()
+        canvas = tk.Canvas(root, width=1300, height=700)
+        app = ap.Application(root, canvas)
+
+        text = tk.Label(root, text="Test7 - Trying to shot same ship field twice", fg="red", width=42, bg='black',
+                        font='WarHeliosCondCBold 25 bold')
+        canvas.create_window(470, 710, anchor='nw', window=text)
+
+        root.update()
+        time.sleep(1)
+
+        app.start_action()
+        root.update()
+        time.sleep(1)
+
+        app.random_board()
+        root.update()
+        time.sleep(1)
+
+        app.play()
+        root.update()
+        time.sleep(1)
+
+        while 1:
+            x = random.randint(0, 9)
+            y = random.randint(0, 9)
+            if app._Application__game.ai_board.board[x][y] == "1":
+                app.shoot(x, y)
+                root.update()
+                time.sleep(1)
+
+                app.shoot(x, y)
+                root.update()
+                time.sleep(1)
+                break
+
+        root.destroy()
+        root.mainloop()
+
+    def test8(self):
+        root = tk.Tk()
+        canvas = tk.Canvas(root, width=1300, height=700)
+        app = ap.Application(root, canvas)
+
+        text = tk.Label(root, text="Test8 - Place some ships and reset board", fg="red", width=42, bg='black',
+                        font='WarHeliosCondCBold 25 bold')
+        canvas.create_window(470, 710, anchor='nw', window=text)
+
+        root.update()
+        time.sleep(1)
+
+        app.start_action()
+        root.update()
+        time.sleep(1)
+
+        self.assertTrue(app.add_ship(bs.Ship(0, 0, bs.Direction.SOUTH, 4)))
+        root.update()
+        time.sleep(1)
+
+        self.assertTrue(app.add_ship(bs.Ship(5, 0, bs.Direction.EAST, 3)))
+        root.update()
+        time.sleep(1)
+
+        self.assertTrue(app.add_ship(bs.Ship(5, 5, bs.Direction.EAST, 3)))
+        root.update()
+        time.sleep(1)
+
+        app.reset_action()
+        root.update()
+        time.sleep(1)
+
+        root.destroy()
+        root.mainloop()
+
+    def test9(self):
+        root = tk.Tk()
+        canvas = tk.Canvas(root, width=1300, height=700)
+        app = ap.Application(root, canvas)
+
+        text = tk.Label(root, text="Test9 - Trying to shot same fields after reset", fg="red", width=42, bg='black',
+                        font='WarHeliosCondCBold 25 bold')
+        canvas.create_window(470, 710, anchor='nw', window=text)
+
+        root.update()
+        time.sleep(1)
+
+        app.start_action()
+        root.update()
+        time.sleep(1)
+
+        app.random_board()
+        root.update()
+        time.sleep(1)
+
+        app.play()
+        root.update()
+        time.sleep(1)
+
+        for i in range(0, 9, 2):
+            app.shoot(i, i)
+            root.update()
+            time.sleep(1)
+
+        app.reset_action_ingame()
+        root.update()
+        time.sleep(1)
+
+        app.random_board()
+        root.update()
+        time.sleep(1)
+
+        app.play()
+        root.update()
+        time.sleep(1)
+
+        for i in range(0, 9, 2):
+            app.shoot(i, i)
+            root.update()
+            time.sleep(1)
+
+        root.destroy()
+        root.mainloop()
+
+    def test10(self):
+        root = tk.Tk()
+        canvas = tk.Canvas(root, width=1300, height=700)
+        app = ap.Application(root, canvas)
+
+        text = tk.Label(root, text="Test10 - Win, then reset without quitting the game", fg="red", width=42, bg='black',
+                        font='WarHeliosCondCBold 25 bold')
+        canvas.create_window(470, 710, anchor='nw', window=text)
+
+        root.update()
+        time.sleep(1)
+
+        app.start_action()
+        root.update()
+        time.sleep(1)
+
+        app.random_board()
+        root.update()
+        time.sleep(1)
+
+        app.play()
+        root.update()
+        time.sleep(1)
+
+        while not app._Application__game.ai_board.gameover():
+            x = random.randint(0, 9)
+            y = random.randint(0, 9)
+            if app._Application__game.ai_board.board[x][y] in ["1", "2", "3", "0"]:
+                app.shoot(x, y)
+                root.update()
+                time.sleep(1)
+
+        app.reset_action_ingame()
+        root.update()
+        time.sleep(1)
+
+        app.random_board()
+        root.update()
+        time.sleep(1)
+
+        app.play()
+        root.update()
+        time.sleep(1)
+
+        app.shoot(4, 4)
+        root.update()
+        time.sleep(1)
+
+        root.destroy()
+        root.mainloop()
+
+    def test11(self):
+        root = tk.Tk()
+        canvas = tk.Canvas(root, width=1300, height=700)
+        app = ap.Application(root, canvas)
+
+        text = tk.Label(root, text="Test11 - Lose, then reset without quitting the game", fg="red", width=42, bg='black',
+                        font='WarHeliosCondCBold 25 bold')
+        canvas.create_window(470, 710, anchor='nw', window=text)
+
+        root.update()
+        time.sleep(1)
+
+        app.start_action()
+        root.update()
+        time.sleep(1)
+
+        app.random_board()
+        root.update()
+        time.sleep(1)
+
+        app.play()
+        root.update()
+        time.sleep(1)
+
+        for x in range(9):
+            for y in range(9):
+                if app._Application__game.player_board.gameover():
+                    break
+                if app._Application__game.ai_board.board[x][y] not in ["1", "2", "3", "0"]:
+                    app.shoot(x, y)
+                    root.update()
+                    time.sleep(1)
+
+        app.reset_action_ingame()
+        root.update()
+        time.sleep(1)
+
+        app.random_board()
+        root.update()
+        time.sleep(1)
+
+        app.play()
+        root.update()
+        time.sleep(1)
+
+        app.shoot(4, 4)
+        root.update()
+        time.sleep(1)
+
+        root.destroy()
+        root.mainloop()
+
 
 if __name__ == "__main__":
-    unittest.main()
+    Test.test11(Test)
+    #unittest.main()

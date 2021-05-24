@@ -154,6 +154,7 @@ class Application(tk.Frame):
             self.__canvas.delete(self.__legend_y[i])
         self.__canvas.delete(self.__final_img_1)
         self.__canvas.delete(self.__final_img_2)
+        self.__canvas.delete(self.__canvas.image)
 
         self.start_action()
         for i in bs.Direction:
