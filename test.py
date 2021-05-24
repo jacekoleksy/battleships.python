@@ -334,7 +334,7 @@ class Test(unittest.TestCase):
         root.destroy()
         root.mainloop()
 
-    def test10(self):
+    def test90(self):
         root = tk.Tk()
         canvas = tk.Canvas(root, width=1300, height=700)
         app = ap.Application(root, canvas)
@@ -385,7 +385,7 @@ class Test(unittest.TestCase):
         root.destroy()
         root.mainloop()
 
-    def test11(self):
+    def test91(self):
         root = tk.Tk()
         canvas = tk.Canvas(root, width=1300, height=700)
         app = ap.Application(root, canvas)
