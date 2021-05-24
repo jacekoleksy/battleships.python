@@ -20,17 +20,17 @@ Projekt polega na napisaniu gry Statki o ogólnych założeniach:
 	* [x] 9. Opcjonalnie: bardziej zaawansowana sztuczna inteligencja omijająca pola na których na pewno nie może znaleźć się okręt gracza. 
 	
 * Testy:
-	* [x] 1. Próba niepoprawnego ustawienia okrętu (stykanie się bokami lub rogami). Oczekiwana informacja o błędzie
-	* [x] 2. Poprawne rozmieszczenie wszystkich okrętów przez gracza i wciśnięcie przycisku rozpoczęcia gry. 
-	* [x] 3. Strzelenie w puste pole. 
-	* [x] 4. Trafienie w okręt przeciwnika. 
-	* [x] 5. Próba zestrzelenia swojego okrętu - oczekiwane niepowodzenie. 
-	* [x] 6. Próba ponownego strzelenia w puste pole - oczekiwane niepowodzenie. 
-	* [x] 7. Próba ponownego strzelenia w okręt przeciwnika - oczekiwane niepowodzenie. 
-	* [x] 8. Rozmieszczenie części okrętów, wciśnięcie przycisku reset - oczekiwany reset plansz. 
-	* [x] 9. Poprawne rozmieszczenie wszystkich okrętów, oddanie kilku strzałów, rozpoczęcie nowej gry, ponowne poprawne rozmieszczenie okrętów, oddanie strzałów w te same pola. 
-	* [x] 10. Wygranie gry (np. Przez pokazanie okrętów przeciwnika). Rozpoczęcie nowej gry bez ponownego uruchamiania programu. 
-	* [x] 11. Przegranie gry (np. Przez aktywację super-instynktu gracza komputera). Rozpoczęcie nowej gry bez ponownego uruchamiania programu. 
+	* [x] 1. Próba niepoprawnego ustawienia okrętu (stykanie się bokami lub rogami). Oczekiwana informacja o błędzie [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L10-L35 "Goto")
+	* [x] 2. Poprawne rozmieszczenie wszystkich okrętów przez gracza i wciśnięcie przycisku rozpoczęcia gry. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L37-L62 "Goto")
+	* [x] 3. Strzelenie w puste pole. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L64-L98 "Goto")
+	* [x] 4. Trafienie w okręt przeciwnika. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L100-L134 "Goto")
+	* [x] 5. Próba zestrzelenia swojego okrętu - oczekiwane niepowodzenie. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L136-L171 "Goto")
+	* [x] 6. Próba ponownego strzelenia w puste pole - oczekiwane niepowodzenie. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L173-L211 "Goto")
+	* [x] 7. Próba ponownego strzelenia w okręt przeciwnika - oczekiwane niepowodzenie. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L213-L251 "Goto")
+	* [x] 8. Rozmieszczenie części okrętów, wciśnięcie przycisku reset - oczekiwany reset plansz. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L253-L286 "Goto")
+	* [x] 9. Poprawne rozmieszczenie wszystkich okrętów, oddanie kilku strzałów, rozpoczęcie nowej gry, ponowne poprawne rozmieszczenie okrętów, oddanie strzałów w te same pola. [`code1`]https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L288-L335 "Goto")
+	* [x] 10. Wygranie gry (np. Przez pokazanie okrętów przeciwnika). Rozpoczęcie nowej gry bez ponownego uruchamiania programu. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L337-L386 "Goto")
+	* [x] 11. Przegranie gry (np. Przez aktywację super-instynktu gracza komputera). Rozpoczęcie nowej gry bez ponownego uruchamiania programu. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L388-L438 "Goto")
 
 * Wymagane konstrukcje:
 	* [x] 1. Wyrażenia lambda <br/>[`code1`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L121 "Goto") [`code2`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L129 "Goto") [`code3`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L195 "Goto")
