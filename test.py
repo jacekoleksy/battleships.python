@@ -439,5 +439,4 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    Test.test11(Test)
-    #unittest.main()
+    unittest.main()
