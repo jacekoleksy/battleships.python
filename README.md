@@ -32,6 +32,10 @@ Projekt polega na napisaniu gry Statki o ogólnych założeniach:
 	* [x] 10. Wygranie gry (np. Przez pokazanie okrętów przeciwnika). Rozpoczęcie nowej gry bez ponownego uruchamiania programu. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L337-L386 "Goto")
 	* [x] 11. Przegranie gry (np. Przez aktywację super-instynktu gracza komputera). Rozpoczęcie nowej gry bez ponownego uruchamiania programu. [`code`](https://github.com/jacekoleksy/battleships.python/blob/d86f5133a04675f244a8a4136dbdb244aa075492/test.py#L388-L438 "Goto")
 
+### Aby odpalic testy, należy uruchomić plik test.py, który automatycznie spowoduje wyświetlenie kolejno wykonywanych testów. Każdy z nich napisałem osobno, aby uwidocznić zmiany oraz opisałem krótką notką. W niektórych nie stosuję funkcji assert, ponieważ moje metody nie zwracały True/False bo po prostu było to niepotrzebne, a jedynie pokazuję efekt wywołania. Przykładowy screen testu:
+![image](https://user-images.githubusercontent.com/47715648/119324933-a8471a80-bc80-11eb-975c-50d669cfc3cb.png)
+
+
 * Wymagane konstrukcje:
 	* [x] 1. Wyrażenia lambda <br/>[`code1`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L121 "Goto") [`code2`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L129 "Goto") [`code3`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/app.py#L195 "Goto")
 	* [x] 2. List comprehensions <br/>[`code1`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L53-L61 "Goto") [`code2`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L67-L81 "Goto") [`code3`](https://github.com/jacekoleksy/battleships.python/blob/492f9faea3105d48c24f7a6594ad9708cd7fd037/battleships.py#L116 "Goto")
